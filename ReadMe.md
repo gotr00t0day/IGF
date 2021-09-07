@@ -33,7 +33,19 @@ Vulnerability Scan<br/>
 <b>More to come in the next release.</b>
 
 # V1.9
+
 ![alt text](https://github.com/gotr00t0day/IGF/blob/main/igfv1-9.png)
+
+1. Added: Update tools<br/>
+          * Updates tools used by IGF
+3. Added: Brute Playground<br/>
+          - Hydra<br/>
+          - patator<br/>
+          - CrackMapExec<br/>
+4. Added: WPScan<br/>
+5. Added: Firewall Detection<br/>
+6. Bug Fixes
+
 
 
 ___________________________________________________________________________________________________________
@@ -59,17 +71,4 @@ pip3 install -r requirements.txt
 
 Config: To change domain / ip just type config and it will prompt you to enter the domain / ip you want to use.
 
-# UPDATES
-
-## IGF V1.9
-
-1. Added: Update tools<br/>
-          * Updates tools used by IGF
-3. Added: Brute Playground<br/>
-          - Hydra<br/>
-          - patator<br/>
-          - CrackMapExec<br/>
-4. Added: WPScan<br/>
-5. Added: Firewall Detection<br/>
-6. Bug Fixes
 
