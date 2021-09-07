@@ -67,5 +67,6 @@ pip3 install -r requirements.txt
           - patator<br/>
           - CrackMapExec<br/>
 3. Added: WPScan<br/>
-4. Bug Fixes
+4. Added: Firewall Detection<br/>
+5. Bug Fixes
 
