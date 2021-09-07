@@ -62,11 +62,12 @@ pip3 install -r requirements.txt
 ## IGF V1.9
 
 1. Added: Update tools<br/>
-2. Added: Brute Playground<br/>
+          * Updates tools used by IGF
+3. Added: Brute Playground<br/>
           - Hydra<br/>
           - patator<br/>
           - CrackMapExec<br/>
-3. Added: WPScan<br/>
-4. Added: Firewall Detection<br/>
-5. Bug Fixes
+4. Added: WPScan<br/>
+5. Added: Firewall Detection<br/>
+6. Bug Fixes
 
