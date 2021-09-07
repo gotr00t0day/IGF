@@ -33,7 +33,7 @@ Vulnerability Scan<br/>
 <b>More to come in the next release.</b>
 
 # V1.9
-![alt text](https://github.com/gotr00t0day/IGF/blob/master/20190823_131503.png)
+![alt text](https://github.com/gotr00t0day/IGF/blob/main/igfv1-9.png)
 
 
 ___________________________________________________________________________________________________________
