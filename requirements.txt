@@ -1,0 +1,12 @@
+dnspython 
+ipaddress 
+fake-useragent 
+python-whois 
+colorama
+shodan
+builtwith
+phonenumbers
+googlesearch-python
+pygeocoder
+jq
+json
