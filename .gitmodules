@@ -1,0 +1,3 @@
+[submodule "CMSmap"]
+	path = CMSmap
+	url = https://github.com/gotr00t0day/IGF.git
