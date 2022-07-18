@@ -58,29 +58,12 @@ class Infogath:
             pass
 
     def Updates(self):
-
-        IGFTools = ["amass",  "Sublist3r",  "subfinder", "ffuf", "gobuster", "enum4linux", "patator", "hydra"]
-
-        pip_tools = ["dnspython", "ipaddress", "fake-useragent", "python-whois", "colorama", "shodan", "builtwith", "phonenumbers", "googlesearch-python", 
-        "pygeocoder", "jq"]
-
-
-        for update_tools in IGFTools:
-            update_tools = update_tools.strip()
-            self.commands(f"sudo apt install {update_tools}")
-        
-        for pip_update in pip_tools:
-            pip_update = pip_update.strip()
-            self.commands(f"sudo pip install {pip_update}")
-
         directory = os.path.abspath(os.getcwd())
-
-        self.commands(f"cd {directory}/CMSeeK | git pull https://github.com/Tuhinshubhra/CMSeeK.git")
-        self.commands(f"cd {directory}/CMSmap | git pull https://github.com/Dionach/CMSmap")
-        self.commands(f"cd {directory}/XSStrike | git pull https://github.com/s0md3v/XSStrike")
-
-        
-
+        self.commands(f"sudo apt install amass sublist3r subfinder ffuf gobuster enum4linux patator hydra")       
+        self.commands(f"sudo pip install dnspython ipaddress fake-useragent python-whois colorama shodan builtwith phonenumbers googlesearch-python pygeocoder jq")
+        self.commands(f"cd {directory}/CMSeeK | git pull")
+        self.commands(f"cd {directory}/CMSmap | git pull")
+        self.commands(f"cd {directory}/XSStrike | git pull")
 
     def config(self):
         config = {}
