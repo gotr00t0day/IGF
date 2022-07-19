@@ -12,7 +12,7 @@ from fake_useragent import UserAgent
 from urllib.parse import urljoin
 from builtwith import builtwith
 from pygeocoder import Geocoder
-from os import path
+from os import path, system
 import time
 import os.path
 import socket, time, os, dns.resolver, sys, urllib, urllib.request, subprocess
@@ -58,28 +58,12 @@ class Infogath:
             pass
 
     def Updates(self):
-
-        IGFTools = ["amass",  "Sublist3r",  "subfinder", "ffuf", "gobuster", "enum4linux", "patator", "hydra"]
-
-        pip_tools = ["dnspython", "ipaddress", "fake-useragent", "python-whois", "colorama", "shodan", "builtwith", "phonenumbers", "googlesearch-python", 
-        "pygeocoder", "jq"]
-
-
-        for update_tools in IGFTools:
-            update_tools = update_tools.strip()
-            self.commands(f"sudo apt install {update_tools}")
-        
-        for pip_update in pip_tools:
-            pip_update = pip_update.strip()
-            self.commands(f"sudo pip install {pip_update}")
-
         directory = os.path.abspath(os.getcwd())
-
-        self.commands(f"cd {directory}/CMSeeK | git pull https://github.com/Tuhinshubhra/CMSeeK.git")
-        self.commands(f"cd {directory}/CMSmap | git pull https://github.com/Dionach/CMSmap")
-        self.commands(f"cd {directory}/XSStrike | git pull https://github.com/s0md3v/XSStrike")
-
-        
+        self.commands(f"sudo apt install amass sublist3r subfinder ffuf gobuster enum4linux patator hydra")       
+        self.commands(f"sudo pip install dnspython ipaddress fake-useragent python-whois colorama shodan builtwith phonenumbers googlesearch-python pygeocoder jq")
+        self.commands(f"cd {directory}/CMSeeK | git pull")
+        self.commands(f"cd {directory}/CMSmap | git pull")
+        self.commands(f"cd {directory}/XSStrike | git pull")
 
 
     def config(self):
@@ -116,7 +100,7 @@ class Infogath:
             ip = self.siteconfig()
             self.commands(f"sudo nmap -sV -sC -v -p- --min-rate 5000 -T4 {ip} -Pn")
         else:
-            self.start()
+            self.enumeration()
     
     def patatorSSH(self):
         if which("patator"):
@@ -582,11 +566,12 @@ class Infogath:
         save = input("Save output to a file?? y/n: ").lower()
         if save == "y":
             name = input("Name of file to save: ")
+            if name == "":
+            	self.SubdomainPlayground()
             with open(name, 'w') as f:
                 f.writelines(out)
             if path.exists(f"{name}"):
                 print(f"{name} successfully saved!")
-
             if not path.exists(f"{name}"):
                 print(f"Couldn't save {name}")
         elif save == "n":
@@ -609,6 +594,8 @@ class Infogath:
         save = input("Save output to a file?? y/n: ").lower()
         if save == "y":
             name = input("Name of file to save: ")
+            if name == "":
+            	self.SubdomainPlayground()            
             with open(name, 'w') as f:
                 f.writelines(out)
             if path.exists(f"{name}"):
@@ -640,7 +627,7 @@ class Infogath:
         if not path.exists(f"{pathfile}/smbplayground/lookupsid.py"):
             directory = os.path.abspath(os.getcwd())
             print (Fore.RED + "Could not find lookupsid.py in {}".format(directory))
-            self.start()
+            self.SmbPlayground()
 
     
     def enumforlinux(self):
@@ -656,7 +643,7 @@ class Infogath:
                 self.commands("sudo apt install enum4linux")
                 print ("enum4linux installed!!")
             elif ask == "n":
-                self.start()
+                self.SmbPlayground()
 
 
     def evilwinrm(self):
@@ -670,9 +657,9 @@ class Infogath:
                 if path.exists('evil-winrm'):
                     print (Fore.GREEN + 'evil-winrm has been cloned!\n')
                 if not path.exists("Could not find evil-winrm directory"):
-                    self.start()
+                    self.WindowsHax()
             if install == "n":
-                self.start()
+                self.WindowsHax()
         print ("\n")
         print("============== Evil-WinRM ================\n")
         ip = self.siteconfig()
@@ -696,9 +683,9 @@ class Infogath:
                     self.commands("python windows-exploit-suggester.py --update")
                     print ("Done updating!\n")  
                 if not path.exists("Couldn't find the Windows-Exploit-Suggester directory"):
-                    self.start()
+                    self.WindowsHax()
             elif install == "n":
-                self.start()
+                self.WindowsHax()
         print ("============== Windows Exploit Suggester ==============\n")
         directory = 'Windows-Exploit-Suggester'
         dbsfile = os.listdir(directory)
@@ -925,7 +912,7 @@ class Infogath:
         if ask == "yes":
             pass
         else:
-            self.start()
+            self.ipinformation()
  
         apikey = input("Enter API key: ")
         try:
@@ -935,7 +922,7 @@ class Infogath:
             h = api.host(url)
         except shodan.exception.APIError:
             print (Fore.RED + "Invalid API key!")
-            self.start()
+            self.ipinformation()
         print(Fore.GREEN + '''
             IP: {}
             Country: {}
@@ -1113,6 +1100,7 @@ class Infogath:
             smtplist = f.readlines()
         except IOError:
             print(Fore.RED + "Could not find the file!")
+            self.enumeration()
        
         print ("********************")
         print ("Host: " + host)
@@ -1252,7 +1240,7 @@ class Infogath:
     def whoistool(self):
         try:
             host = self.siteconfig()
-            w = whois.query(host)
+            w = whois.whois(host)
             for key, value in w.__dict__.items():
                 print (Fore.GREEN + key, ":", value)
                 time.sleep(2)
@@ -1341,6 +1329,7 @@ class Infogath:
             file.close()
         except IOError:
             print (Fore.RED + "Couldn't find " + wordlist)
+            self.webinfo()
             pass
        
         ua = UserAgent()
@@ -1537,17 +1526,17 @@ class Infogath:
         while True:
             print (Fore.RED + banner)
  
-            print (Fore.RED + "[" + Fore.CYAN + "1" + Fore.RED + "]" + Fore.WHITE + "  Banner Grabber\t\t" + Fore.RED + "[" + Fore.CYAN + "11" + Fore.RED + "]" + Fore.WHITE + " Cloudflare Bypass")    
-            print (Fore.RED + "[" + Fore.CYAN + "2" + Fore.RED + "]" + Fore.WHITE + "  Directory brute\t\t" + Fore.RED + "[" + Fore.CYAN + "12" + Fore.RED + "]" + Fore.WHITE + " Wordpress Dir Finder")
-            print (Fore.RED + "[" + Fore.CYAN + "3" + Fore.RED + "]" + Fore.WHITE + "  Subdomain brute\t\t" + Fore.RED + "[" + Fore.CYAN + "13" + Fore.RED + "]" + Fore.WHITE + " Reverse DNS Lookup")
-            print (Fore.RED + "[" + Fore.CYAN + "4" + Fore.RED + "]" + Fore.WHITE + "  Reverse IP Lookup\t\t" + Fore.RED + "[" + Fore.CYAN + "14" + Fore.RED + "]" + Fore.WHITE + " Find Uploads")
-            print (Fore.RED + "[" + Fore.CYAN + "5" + Fore.RED + "]" + Fore.WHITE + "  Get robots.txt\t\t" + Fore.RED + "[" + Fore.CYAN + "15" + Fore.RED + "]" + Fore.WHITE + " Find Shells")     
-            print (Fore.RED + "[" + Fore.CYAN + "6" + Fore.RED + "]" + Fore.WHITE + "  Whois lookup\t\t" + Fore.RED + "[" + Fore.CYAN + "16" + Fore.RED + "]" + Fore.WHITE + " Website Status")    
-            print (Fore.RED + "[" + Fore.CYAN + "7" + Fore.RED + "]" + Fore.WHITE + "  HTTP HEAD request\t\t" + Fore.RED + "[" + Fore.CYAN + "17" + Fore.RED + "]" + Fore.WHITE + " Spider: Extract Links")    
-            print (Fore.RED + "[" + Fore.CYAN + "8" + Fore.RED + "]" + Fore.WHITE + "  HTTP OPTIONS\t\t" + Fore.RED + "[" + Fore.CYAN + "18" + Fore.RED + "]" + Fore.WHITE + " Technology Discovery")        
-            print (Fore.RED + "[" + Fore.CYAN + "9" + Fore.RED + "]" + Fore.WHITE + "  DNS lookup\t\t\t" + Fore.RED + "[" + Fore.CYAN + "19" + Fore.RED + "]" + Fore.WHITE + " Find Backup files")
-            print (Fore.RED + "[" + Fore.CYAN + "10" + Fore.RED + "]" + Fore.WHITE + " Find Admin Panel\t\t" + Fore.RED + "[" + Fore.CYAN + "20" + Fore.RED + "]" + Fore.WHITE + " Session Cookies")
-            print (Fore.RED + "[" + Fore.CYAN + "22" + Fore.RED + "]" + Fore.WHITE + " Probe Domains\t\t" + Fore.RED + "[" + Fore.CYAN + "21" + Fore.RED + "]" + Fore.WHITE + " CMS Detection")
+            print (Fore.RED + "[" + Fore.CYAN + "1" + Fore.RED + "]" + Fore.WHITE + "  Banner Grabber\t\t" + Fore.RED + "[" + Fore.CYAN + "12" + Fore.RED + "]" + Fore.WHITE + " Cloudflare Bypass")    
+            print (Fore.RED + "[" + Fore.CYAN + "2" + Fore.RED + "]" + Fore.WHITE + "  Directory brute\t\t" + Fore.RED + "[" + Fore.CYAN + "13" + Fore.RED + "]" + Fore.WHITE + " Wordpress Dir Finder")
+            print (Fore.RED + "[" + Fore.CYAN + "3" + Fore.RED + "]" + Fore.WHITE + "  Subdomain brute\t\t" + Fore.RED + "[" + Fore.CYAN + "14" + Fore.RED + "]" + Fore.WHITE + " Reverse DNS Lookup")
+            print (Fore.RED + "[" + Fore.CYAN + "4" + Fore.RED + "]" + Fore.WHITE + "  Reverse IP Lookup\t\t" + Fore.RED + "[" + Fore.CYAN + "15" + Fore.RED + "]" + Fore.WHITE + " Find Uploads")
+            print (Fore.RED + "[" + Fore.CYAN + "5" + Fore.RED + "]" + Fore.WHITE + "  Get robots.txt\t\t" + Fore.RED + "[" + Fore.CYAN + "16" + Fore.RED + "]" + Fore.WHITE + " Find Shells")     
+            print (Fore.RED + "[" + Fore.CYAN + "6" + Fore.RED + "]" + Fore.WHITE + "  Whois lookup\t\t" + Fore.RED + "[" + Fore.CYAN + "17" + Fore.RED + "]" + Fore.WHITE + " Website Status")    
+            print (Fore.RED + "[" + Fore.CYAN + "7" + Fore.RED + "]" + Fore.WHITE + "  HTTP HEAD request\t\t" + Fore.RED + "[" + Fore.CYAN + "18" + Fore.RED + "]" + Fore.WHITE + " Spider: Extract Links")    
+            print (Fore.RED + "[" + Fore.CYAN + "8" + Fore.RED + "]" + Fore.WHITE + "  HTTP OPTIONS\t\t" + Fore.RED + "[" + Fore.CYAN + "19" + Fore.RED + "]" + Fore.WHITE + " Technology Discovery")        
+            print (Fore.RED + "[" + Fore.CYAN + "9" + Fore.RED + "]" + Fore.WHITE + "  DNS lookup\t\t\t" + Fore.RED + "[" + Fore.CYAN + "20" + Fore.RED + "]" + Fore.WHITE + " Find Backup files")
+            print (Fore.RED + "[" + Fore.CYAN + "10" + Fore.RED + "]" + Fore.WHITE + " Find Admin Panel\t\t" + Fore.RED + "[" + Fore.CYAN + "21" + Fore.RED + "]" + Fore.WHITE + " Session Cookies")
+            print (Fore.RED + "[" + Fore.CYAN + "11" + Fore.RED + "]" + Fore.WHITE + " Probe Domains\t\t" + Fore.RED + "[" + Fore.CYAN + "22" + Fore.RED + "]" + Fore.WHITE + " CMS Detection")
             print (Fore.RED + "<" + Fore.CYAN +"--" + Fore.WHITE + " Back")
  
  
@@ -1582,29 +1571,29 @@ class Infogath:
             if prompt == "10":
                 self.adminpanelfind()
             if prompt == "11":
-                self.cloudflarebypass()
-            if prompt == "12":
-                self.wordpresscheck()
-            if prompt == "13":
-                self.reversednslookup()
-            if prompt == "14":
-                self.finduploads()
-            if prompt == "15":
-                self.shellfinder()
-            if prompt == "16":
-                self.checksite()
-            if prompt == "17":
-                self.spider()
-            if prompt == "18":
-                self.techdiscovery()
-            if prompt == "19":
-                self.findbackup()
-            if prompt == "20":
-                self.sessionscookies()
-            if prompt == "21":
-                self.cmseek()
-            if prompt == "22":
                 self.httprobe()
+            if prompt == "12":
+                self.cloudflarebypass()
+            if prompt == "13":
+                self.wordpresscheck()
+            if prompt == "14":
+                self.reversednslookup()
+            if prompt == "15":
+                self.finduploads()
+            if prompt == "16":
+                self.shellfinder()
+            if prompt == "17":
+                self.checksite()
+            if prompt == "18":
+                self.spider()
+            if prompt == "19":
+                self.techdiscovery()
+            if prompt == "20":
+                self.findbackup()
+            if prompt == "21":
+                self.sessionscookies()
+            if prompt == "22":
+                self.cmseek()
             if prompt == "back":
                 self.start()
             if prompt == "exit":
@@ -1888,6 +1877,7 @@ class Infogath:
  
     def start(self):
         while True:
+            os.system('cls' if os.name == 'nt' else 'clear')
             options = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "X"]
             print (Fore.RED + banner)
             print (Fore.RED + "\033[0;0mAuthor  : c0deninja".rjust(30, "="))
