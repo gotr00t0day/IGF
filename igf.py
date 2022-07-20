@@ -1596,8 +1596,6 @@ class Infogath:
                 self.cmseek()
             if prompt == "back":
                 self.start()
-            if prompt == "exit":
-                exit()
     
  
     def WindowsHax(self):
