@@ -256,14 +256,10 @@ class Infogath:
                 self.commands(f"cd {path_igf}/torghost")
                 self.commands(f"chmod +x {path_igf}/torghost/build.sh")
                 self.commands(f"bash {path_igf}/torghost/build.sh")
-                if os.path.exists(f"torghost"):
-                    print("torghost cloned successfully!")
+                if which("torghost"):
+                    print("torghost installed successfully!")
                 else:
-                    print(Fore.RED + "torghost couldn't be cloned")
-                if not which("toghost"):
-                    print("torghost not installed")
-                else:
-                    pass
+                    print(Fore.RED + "torghost couldn't be installed")
             else:
                 self.start()
 
