@@ -45,7 +45,7 @@ banner = """
  ░██░   ░▒▓███▀▒   ░▒█░    
  ░▓      ░▒   ▒     ▒ ░    
  ▒ ░     ░   ░     ░      
- ▒ ░   ░ ░   ░     ░ ░   v1.9
+ ▒ ░   ░ ░   ░     ░ ░   v1.10
  ░           ░                                        
 
 """
@@ -64,6 +64,7 @@ class Infogath:
         self.commands(f"cd {directory}/CMSeeK | git pull")
         self.commands(f"cd {directory}/CMSmap | git pull")
         self.commands(f"cd {directory}/XSStrike | git pull")
+        self.commands(f"cd {directory}/torghost | git pull")
 
 
     def config(self):
@@ -255,6 +256,8 @@ class Infogath:
                     print("torghost installed successfully!")
                 else:
                     print(Fore.RED + "torghost couldn't be installed")
+            else:
+                self.start()
 
 
     def myip(self):
@@ -300,7 +303,7 @@ class Infogath:
 
     def dirsearch(self):
         path = os.path.abspath(os.getcwd())
-        self.commands(f"python3 {path}/directoryplayground/dirsearch/dirsearch.py -e php,html,txt -u {self.siteconfig()}")
+        self.commands(f"python3 {path}/directoryplayground/dirsearch/dirsearch.py -e php,html,txt -u {self.siteconfig}")
         print(self.siteconfig)
     
     def smbclient(self):
@@ -567,7 +570,7 @@ class Infogath:
         if save == "y":
             name = input("Name of file to save: ")
             if name == "":
-            	self.SubdomainPlayground()
+                self.SubdomainPlayground()
             with open(name, 'w') as f:
                 f.writelines(out)
             if path.exists(f"{name}"):
@@ -595,7 +598,7 @@ class Infogath:
         if save == "y":
             name = input("Name of file to save: ")
             if name == "":
-            	self.SubdomainPlayground()            
+                self.SubdomainPlayground()            
             with open(name, 'w') as f:
                 f.writelines(out)
             if path.exists(f"{name}"):
@@ -753,25 +756,28 @@ class Infogath:
         dork = input("Enter Dork: ")
         numpage = input("Enter number of links to display: ")
         print ("\n")
+        found_links = []
         for url in search(dork, stop=int(numpage), user_agent=str(header)):
-            print (url)
-       
-        print ("Found: {} links".format(numpage))
-        save = input("Save results to a file (y/n)?: ").lower()
-        if save == "y":
-            dorklist = input("Filename: ")
-            f = open(dorklist, 'w')
-            for url in search(dork, stop=int(numpage)):
-                f.writelines(url)
-                f.writelines("\n")
-            f.close()
-            
-            if path.exists(dorklist):
-                print ("File saved successfully")
-            if not path.exists(dorklist):
-                print ("File was not saved")
-        elif save == "n":
-            pass
+            found_links.append(url)
+        if found_links:
+            print ("Found: {} links".format(numpage))
+            save = input("Save results to a file (y/n)?: ").lower()
+            if save == "y":
+                dorklist = input("Filename: ")
+                f = open(dorklist, 'w')
+                for url in search(dork, stop=int(numpage)):
+                    f.writelines(url)
+                    f.writelines("\n")
+                    f.close()    
+                if path.exists(dorklist):
+                    print ("File saved successfully")
+                if not path.exists(dorklist):
+                    print ("File was not saved")
+            elif save == "n":
+                for url in search(dork, stop=int(numpage), user_agent=str(header)):
+                    print(url)
+        else:
+            print("No links were found")
  
     def sessionscookies(self):
         try:
@@ -1845,7 +1851,9 @@ class Infogath:
 
     def DirectoryPlayground(self):
         while True:
-            print(Fore.RED + banner)
+            print(Fore.RED + banner + "\n")
+            self.displayconfig()
+            print()
             
             print (Fore.RED + "[" + Fore.CYAN + "1" + Fore.RED + "]" + Fore.WHITE + "  DirSearch")  
             print (Fore.RED + "[" + Fore.CYAN + "2" + Fore.RED + "]" + Fore.WHITE + "  Dirb") 
@@ -1853,7 +1861,6 @@ class Infogath:
             print (Fore.RED + "[" + Fore.CYAN + "4" + Fore.RED + "]" + Fore.WHITE + "  Fuff")      
 
             print (Fore.RED + "<" + Fore.CYAN +"--" + Fore.WHITE + " Back")
- 
             print ("\n")    
  
             windowshaxcolor = Fore.RED + "(" + Fore.CYAN + "Directory Playground" + Fore.RED + ")"
