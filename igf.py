@@ -400,7 +400,7 @@ class Infogath:
     def nmapvuln(self):
         print("======== Vulnerability scan with Nmap ========\n")
         site = self.siteconfig()
-        if "https://" or "http://" or "https://www." or "http://www.":
+        if "https://" or "http://" or "https://www." or "http://www." in site:
             print(f"{Fore.RED} please use site.com")
             self.vulnerability()
         self.commands("nmap --script vuln {}".format(site))
@@ -408,7 +408,7 @@ class Infogath:
     def shellshock(self):
         print("======= Scanning for shellshock vulnerability =======\n")
         site = self.siteconfig()
-        if "https://" or "http://" or "https://www." or "http://www.":
+        if "https://" or "http://" or "https://www." or "http://www." in site:
             print(f"{Fore.RED} please use site.com")
             self.vulnerability()
         self.commands("nmap -sV -p- --script http-shellshock {}".format(site))
@@ -416,7 +416,7 @@ class Infogath:
     def heartbleedvuln(self):
         print("======= Scanning for the HeartBleed vulnerability =======\n")
         site = self.siteconfig()
-        if "https://" or "http://" or "https://www." or "http://www.":
+        if "https://" or "http://" or "https://www." or "http://www." in site:
             print(f"{Fore.RED} please use site.com")
             self.vulnerability()
         self.commands("nmap -p 443 --script ssl-heartbleed {}".format(site))
@@ -424,7 +424,7 @@ class Infogath:
     def drupageddon(self):
         print("====== Scanning for the Drupageddon vulnerability ======\n")
         site = self.siteconfig()
-        if "https://" or "http://" or "https://www." or "http://www.":
+        if "https://" or "http://" or "https://www." or "http://www." in site:
             print(f"{Fore.RED} please use site.com")
             self.vulnerability()
         self.commands("nmap --script http-vuln-cve2014-3704 --script-args http-vuln-cve2014-3704.cmd='uname -a',http-vuln-cve2014-3704.uri='/drupal' {}".format(site))
