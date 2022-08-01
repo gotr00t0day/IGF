@@ -29,7 +29,7 @@ import uuid
  
 #####################################################################
 #                                                                   #
-# IGF - Information Gathering Framework v1.9 by c0deninja           #
+# IGF - Information Gathering Framework v1.10 by c0deninja          #
 #                                                                   #
 # pip3 install -r requirements.txt                                  #
 #                                                                   #
