@@ -256,10 +256,14 @@ class Infogath:
                 self.commands(f"cd {path_igf}/torghost")
                 self.commands(f"chmod +x {path_igf}/torghost/build.sh")
                 self.commands(f"bash {path_igf}/torghost/build.sh")
-                if which("torghost"):
-                    print("torghost installed successfully!")
+                if os.path.exists(f"torghost"):
+                    print("torghost cloned successfully!")
                 else:
-                    print(Fore.RED + "torghost couldn't be installed")
+                    print(Fore.RED + "torghost couldn't be cloned")
+                if not which("toghost"):
+                    print("torghost not installed")
+                else:
+                    pass
             else:
                 self.start()
 
@@ -396,21 +400,33 @@ class Infogath:
     def nmapvuln(self):
         print("======== Vulnerability scan with Nmap ========\n")
         site = self.siteconfig()
+        if "https://" or "http://" or "https://www." or "http://www.":
+            print(f"{Fore.RED} please use site.com")
+            self.vulnerability()
         self.commands("nmap --script vuln {}".format(site))
     
     def shellshock(self):
         print("======= Scanning for shellshock vulnerability =======\n")
         site = self.siteconfig()
+        if "https://" or "http://" or "https://www." or "http://www.":
+            print(f"{Fore.RED} please use site.com")
+            self.vulnerability()
         self.commands("nmap -sV -p- --script http-shellshock {}".format(site))
     
     def heartbleedvuln(self):
         print("======= Scanning for the HeartBleed vulnerability =======\n")
         site = self.siteconfig()
+        if "https://" or "http://" or "https://www." or "http://www.":
+            print(f"{Fore.RED} please use site.com")
+            self.vulnerability()
         self.commands("nmap -p 443 --script ssl-heartbleed {}".format(site))
     
     def drupageddon(self):
         print("====== Scanning for the Drupageddon vulnerability ======\n")
         site = self.siteconfig()
+        if "https://" or "http://" or "https://www." or "http://www.":
+            print(f"{Fore.RED} please use site.com")
+            self.vulnerability()
         self.commands("nmap --script http-vuln-cve2014-3704 --script-args http-vuln-cve2014-3704.cmd='uname -a',http-vuln-cve2014-3704.uri='/drupal' {}".format(site))
     
     def drupageddon2(self):
