@@ -60,7 +60,7 @@ class Infogath:
     def Updates(self):
         directory = os.path.abspath(os.getcwd())
         self.commands(f"sudo apt install amass sublist3r subfinder ffuf gobuster enum4linux patator hydra")       
-        self.commands(f"sudo pip install dnspython ipaddress fake-useragent python-whois colorama shodan builtwith phonenumbers googlesearch-python pygeocoder jq")
+        self.commands(f"sudo pip3 install dnspython ipaddress fake-useragent python-whois colorama shodan builtwith phonenumbers googlesearch-python pygeocoder jq")
         self.commands(f"cd {directory}/CMSeeK | git pull")
         self.commands(f"cd {directory}/CMSmap | git pull")
         self.commands(f"cd {directory}/XSStrike | git pull")
