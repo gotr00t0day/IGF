@@ -3,7 +3,6 @@
 from colorama import Fore, Back, Style
 from shutil import which
 from phonenumbers import geocoder
-import shutil
 import phonenumbers
 from shodan import Shodan
 from googlesearch import search
